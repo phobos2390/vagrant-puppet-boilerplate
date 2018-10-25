@@ -1,0 +1,4 @@
+packages:
+  - cmake
+  - gcc
+  - gcc-c++

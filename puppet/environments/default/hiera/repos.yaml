@@ -1,0 +1,5 @@
+repo-defaults:
+  revision: master
+repos:
+  phobos2390-monopolysim:
+    url: "https://github.com/phobos2390/MonopolySim.git"

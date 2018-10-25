@@ -1,0 +1,1 @@
+# Vagrant puppet boilerplate

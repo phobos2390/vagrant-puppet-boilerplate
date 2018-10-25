@@ -1,0 +1,12 @@
+#:backends:
+#  - eyaml
+
+:yaml:
+  :datadir: "%{::puppet_dir}/environments/default/hiera"
+
+:hierarchy:
+  - "%{::user}"
+  - "common"
+  - "repos"
+  - "packages"
+  - "stuffz"
