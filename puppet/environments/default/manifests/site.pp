@@ -10,3 +10,8 @@ package { $packages:
   ensure => installed,
 }
 
+$repos=hiera('repos')
+$repodefaults=hiera('repo-defaults')
+
+create_resources(vcsrepo,$repos,$repodefaults)
+

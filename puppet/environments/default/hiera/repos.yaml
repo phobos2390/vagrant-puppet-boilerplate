@@ -1,5 +1,7 @@
 repo-defaults:
+  ensure: present
   revision: master
+  provider: git
 repos:
-  phobos2390-monopolysim:
-    url: "https://github.com/phobos2390/MonopolySim.git"
+  /home/vagrant/phobos2390/monopolysim:
+    source: "git://github.com/phobos2390/MonopolySim.git"

@@ -7,8 +7,17 @@ Vagrant.configure("2") do |config|
     vb.memory = 4096
   end
 
-  config.vm.provision :shell, name: "Setup-Puppet", privileged: false, inline: <<-SHELL
-    sudo yum install -y git
+  config.vm.provision :shell, name: "Setup-Puppet", privileged: true, inline: <<-SHELL
+    mkdir -p /usr/local/rvm
+    curl -sSL https://rvm.io/mpapis.asc | gpg --import -
+    curl -L get.rvm.io | bash -s stable --path /usr/local/rvm
+    [ -f /etc/profile.d/rvm.sh ] && source /etc/profile.d/rvm.sh
+    [ -f /home/vagrant/.rvm/scripts/rvm ] && source /home/vagrant/.rvm/scripts/rvm
+    [ -f /home/vagrant/.rvm/scripts/rvm ] && source /home/vagrant/.rvm/scripts/rvm
+    rvm reload
+    rvm requirements run
+    rvm install 2.5
+    yum install -y git
     git clone --recursive https://github.com/hashicorp/puppet-bootstrap.git /tmp/puppet-bootstrap
     if [ -d /tmp/puppet-bootstrap ]; then
       pushd /tmp/puppet-bootstrap
@@ -16,7 +25,9 @@ Vagrant.configure("2") do |config|
       popd
       rm -rf /tmp/puppet-bootstrap
     fi
-    sudo gem install librarian-puppet -v '~> 2.2' --no-rdoc --no-ri
+    #sudo rpm -Uvh https://yum.puppetlabs.com/puppet5/puppet5-release-el-7.noarch.rpm
+    gem install puppet -v '~> 5.0' --no-rdoc --no-ri
+    gem install librarian-puppet -v '~> 3.0' --no-rdoc --no-ri
   SHELL
 
   config.vm.synced_folder ".","/vagrant", type: "rsync"
@@ -26,7 +37,7 @@ Vagrant.configure("2") do |config|
     cd /vagrant/puppet/environments/default/
     if [ ! -e Puppetfile.lock -o Puppetfile.lock -ot Puppetfile ]; then
       chmod -R a+rw modules
-      sudo /usr/local/bin/librarian-puppet install
+      librarian-puppet install
 #      [ $? -eq 0 ] && touch Puppetfile.lock
     else
       echo "Puppetfile is locked"
