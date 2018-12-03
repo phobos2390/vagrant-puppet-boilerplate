@@ -5,3 +5,5 @@ repo-defaults:
 repos:
   /home/vagrant/phobos2390/monopolysim:
     source: "git://github.com/phobos2390/MonopolySim.git"
+  /home/vagrant/phobos2390/dotfiles:
+    source: "git://github.com/phobos2390/dotfiles.git"

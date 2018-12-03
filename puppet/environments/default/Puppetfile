@@ -6,3 +6,6 @@ forge "https://forge.puppet.com"
 mod 'puppetlabs-stdlib'
 mod 'puppetlabs-vcsrepo'
 
+mod 'phobos2390-people',
+  :ref => 'master',
+  :git => 'https://github.com/phobos2390/phobos2390-people.git'
