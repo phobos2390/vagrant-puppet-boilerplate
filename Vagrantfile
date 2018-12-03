@@ -1,3 +1,23 @@
+require 'pathname'
+require 'fileutils'
+
+home_ssh = Pathname.new(File.expand_path('~') + '/.ssh')
+pwd_ssh = Pathname.new(FileUtils.pwd() + '/.ssh')
+
+if (!File.directory?(pwd_ssh))
+  FileUtils.mkdir(pwd_ssh)
+end
+
+if (File.directory?(home_ssh))
+  home_ssh.each_child do |file|
+    if(file.basename() != 'authorized_keys' &&
+      !File.exists?(pwd_ssh + file.basename()))
+      puts "Moving #{file} to #{pwd_ssh}"
+      FileUtils.cp(file, pwd_ssh)
+    end
+  end
+end
+
 Vagrant.configure("2") do |config|
   config.vm.box = "centos/7"
   config.ssh.forward_agent = true
